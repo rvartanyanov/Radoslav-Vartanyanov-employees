@@ -1,6 +1,6 @@
-﻿using System.Globalization;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Globalization;
 
 namespace EmployeeCompatibilityWebAPI.Services
 {
@@ -65,7 +65,9 @@ namespace EmployeeCompatibilityWebAPI.Services
                     continue;
                 }
 
-                DateTime dateTo = parts[3].Trim().ToUpper() == "NULL" ? DateTime.Today : TryParseDate(parts[3], out DateTime parsedDateTo) ? parsedDateTo : DateTime.Today;
+                DateTime dateTo = parts[3].Trim().ToUpper() == "NULL" ? DateTime.Now : TryParseDate(parts[3], out DateTime parsedDateTo) ? parsedDateTo : DateTime.Now;
+
+                if (dateTo < dateFrom) continue;
 
                 employeeProjects.Add(new EmployeeProject
                 {
