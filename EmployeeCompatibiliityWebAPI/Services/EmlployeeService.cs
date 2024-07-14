@@ -46,7 +46,7 @@ namespace EmployeeCompatibilityWebAPI.Services
         {
             var employeeProjects = new List<EmployeeProject>();
             bool isHeader = true;
-            var lines = fileContent.Split('\n');
+            var lines = fileContent.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var line in lines)
             {
@@ -65,7 +65,7 @@ namespace EmployeeCompatibilityWebAPI.Services
                     continue;
                 }
 
-                DateTime dateTo = parts[3].Trim().ToUpper() == "NULL" ? DateTime.Now : TryParseDate(parts[3], out DateTime parsedDateTo) ? parsedDateTo : DateTime.Now;
+                DateTime dateTo = parts[3].ToUpper() == "NULL" ? DateTime.Now : TryParseDate(parts[3], out DateTime parsedDateTo) ? parsedDateTo : DateTime.Now;
 
                 if (dateTo < dateFrom) continue;
 
